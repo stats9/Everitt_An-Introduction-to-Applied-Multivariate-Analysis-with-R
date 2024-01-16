@@ -1,0 +1,341 @@
+---
+title: Excercises of Season 8 (Applied Multivariate Statistical Analysis Johnson)
+format: gfm
+---
+
+
+
+
+```{r}
+#| include: false
+
+options(digits = 4)
+
+```
+
+***
+***
+
+<br><br> 
+
+### Ex. xi. 
+
+8.11. Consider the census-tract data listed in Table 8.5. Suppose the observations on X~5~ = median value home were recorded in ten thousands, rather than hundred thousands, of dollars; that is, multiply all the numbers listed in the sixth column of the table by 10.
+(a) Construct the sample covariance matrix S for the census-tract data when
+X~5~ = median value home is recorded in ten thousands of dollars. (Note that this.
+covariance matrix can be obtained from the covariance matrix given in Example 8.3
+by multiplying the off-diagonal elements in the fifth column and row by 10 and the
+diagonal element s~55~ by 100. Why?)
+
+(b) Obtain the eigenvalue-eigenvector pairs and the first two sample principal components for the covariance matrix in Part a.
+
+(c) Compute the proportion of total variance explained by the first two principal
+components obtained in Part b. Calculate the correlation coefficients, 
+$r_{\hat{Y}_j, x_k}$, and
+interpret these components if possible. Compare your results with the results in
+Example 8.3. What. can you say about the effects of this change in scale on the
+principal components?
+
+<br><br>
+
+##### Soloution: 
+
+
+###### (a):
+
+```{r}
+#| warning: false
+
+S <- matrix(c(3.397, -1.102, 4.306, -2.078, 0.027, 
+            -1.102, 9.673, -1.513, 10.953, 1.203, 
+            4.306, -1.513, 55.626, -28.937, -0.044, 
+            -2.078, 10.953, -28.937, 89.067, 0.957, 
+            0.027, 1.203, -0.044, 0.957, 0.319), 
+            byrow = T, nrow = 5, ncol = 5)
+
+S[, 5] <- 10 * S[, 5]
+S[5, ] <- 10 * S[5, ]
+
+print(S)
+```
+
+
+<br><br>
+
+###### (b): 
+
+```{r}
+#| warning: false
+
+E <- eigen(S)
+la <- E$values
+v <- E$vectors
+
+la
+v
+
+```
+
+
+
+$$
+\begin{aligned}
+& \hat{y}_1 = -0.038 x_1 + 0.119  x_2 - 0.480  x_3 + 0.859 x_4 + 0.129 x_5\\
+& \hat{y}_2 = -0.062 x_1 - 0.249 x_2 - 0.759 x_3 - 0.316 x_4 - 0.508 x_5
+\end{aligned}
+$$
+
+
+
+<br><br>
+
+
+###### (c): 
+
+```{r}
+#| warning: false
+
+
+cor_mat <- matrix(0, nrow = 2, ncol = 5)
+
+for (i in 1:2) { 
+    for (j in 1: 5) {
+        temp <- v[, i]
+        cor_mat[i, j] <- sqrt(la[i]) * temp[j] / sqrt(S[j, j])
+    }
+}
+cor_mat
+```
+
+
+<br><br>
+
+```{r}
+#| warning: false
+
+cumsum(la) / sum(la)
+```
+
+
+<br>
+
+***
+***
+
+<br>
+
+### Ex. xiii.
+
+8.13. In the radiotherapy data listed in Table 1.7 (see also the radiotherapy data), the n = 98 observations on p = 6 variables rep-
+resent patients' reactions to radiotherapy.
+(a) Obtain the covariance and correlation matrices S and R for these data.
+(b) Pick one of the matrices S or R (justify your choice), and determine the eigenval-
+ues and eigenvectors. Prepare a table showing, in decreasing order of size, the per-
+cent that each eigenvalue contributes to the total sample variance.
+(c) Given the results in Part b, decide on the number of important sample principal
+components. Is it possible to summarize the radiotherapy data with a single reaction-
+index component? Explain.
+(d) Prepare a table of the correlation coefficients between each principal component
+you decide to retain and the original variables. If possible, interpret the components.
+
+<br><br>
+
+#### Soloution: 
+
+###### load data 
+
+```{r}
+#| warning: false
+
+dat <- read.table("Johnson_Data/table_1_7.txt", header = FALSE)
+
+names(dat) <- paste("x", 1:6, sep = "_")
+head(dat)
+head(dat)
+
+
+```
+
+
+###### (a): 
+
+```{r}
+#| warning: false
+
+R <- cor(dat)
+S <- cov(dat)
+
+
+print(R)
+
+print(S)
+```
+
+
+
+***
+
+
+###### (b): 
+
+
+```{r}
+Sigg <- diag(S)
+print(Sigg)
+```
+
+
+
+As we can see, the variance values ​​of the variables in the data set are not very harmonious, four of the variables have variances less than one and one of them has a variance greater than four, so we use the S matrix to implement a principal components model.
+
+
+```{r}
+Es <- eigen(S)$values
+ER <- eigen(R)$values
+
+## Eigen values
+print(Es)
+print(ER)
+
+
+## Eigen Vectors 
+Vs <- eigen(S)$vectors
+print(Vs)
+
+VR <- eigen(R)$vectors
+print(VR)
+
+## sort eigenvalues 
+
+Es1 <- sort(Es, decreasing = T)
+Er1 <- sort(ER, decreasing = T)
+
+## Table for EigenValues of Covariance Matrix 
+round((Es1 / sum(Es1) * 100) , 4)
+
+
+## table for EigenValues of Correlation Matrix
+round((Er1 / sum(Er1) * 100) , 4)
+round((cumsum(Er1) / sum(Er1) * 100) , 4)
+abs(diff(Er1))
+
+
+```
+
+
+
+
+***
+***
+
+
+
+$$
+r_{\hat{y}_i, ~ x_k} = \frac{\hat{e}_{k, i} \times \sqrt{\hat{\lambda}_i}}{\sqrt{s_{kk}}} \implies 
+$$
+
+```{r}
+#| warning: false
+
+mat_cor <- matrix(NA, 4, 6, dimnames = list(Pri = paste("y", 1:4, sep = ""), Var = paste("x", 1:6, sep = "")))
+
+for (i in 1:4) {
+    e <- Vs[, i]
+    l <- Es[i]
+    for (j in 1:6) {
+        skk <- Sigg[j]
+        mat_cor[i, j] = e[j] * sqrt(l) / sqrt(skk)
+    }
+}
+
+round(mat_cor, 4)
+```
+
+
+
+
+***
+***
+
+
+#### EX. xxv. 
+
+8.25. Refer to the police overtime hours data in Example 8.10. Construct an alternate control
+chart, based on the sum of squares dU^2^, to monitor the unexplained variation in the orig-
+inal observations summarized by the additional principal components.
+
+
+```{r}
+#| warning: false
+
+dat <- read.table("Johnson_Data/table_5_8.txt", header = F)
+head(dat)
+R <- cor(dat)
+
+model <- princomp(dat, cor = TRUE, scores = TRUE)
+
+summary(model)
+
+Y <- model$loadings[]
+
+Y <- model$scores
+
+l <- eigen(R)$values
+
+l2 <- l[3:6]
+yy <- Y[, 3:6]
+for (i in 4) {
+    yy[, i] <- 1/sqrt(l2[i]) * yy[, i]
+}
+new_y <- apply(yy, 1, function(x) sum(x^2))
+
+UCL <- qchisq(0.95, df = 4)
+
+time <- 1:16
+
+
+# library(httpgd); hgd(); hgd_browse()
+plot(x = time, y = new_y, xlab = "Priods", ylab = "Tj", 
+            main = "Control Chart", type = "o", 
+                col = "darkblue", pch = 16, cex = 2, ylim = c(0, 10))
+abline(h = UCL, lwd = 2, col = "red")
+text(x = 5, y = UCL + 0.2, label = "UCL Bond", cex = 2)
+
+```
+
+
+***
+***
+
+
+### Ex. XXvii. 
+
+8.27. The pulp and paper properties data is given in Table 7.7. Using the four paper variables,
+BL (breaking length), EM (elastic modulus), SF (Stress at failure) and BS (burst
+strength), perform a principal component analysis using the covariance matrix S and the
+correlation matrix R. Your analysis should include the following:
+(a) Determine the appropriate number of components to effectively summarize the
+variability. Construct a scree plot to aid in your determination.
+
+(b) Interpret the sample principal components.
+
+(c) Do you think it it is possible to develop a "paper strength" index that effectively con-
+tains the information in the four paper variables? Explain.
+
+(d) Using the values for the first two principal components, plot the data in a two-
+dimensional space with ŷ1 along the vertical axis and ŷ2 along the horizontal axis.
+Identify any outliers in this data set.
+
+
+
+##### Soloution 
+
+
+###### (a): 
+
+
+```{r}
+#| 
+
+
+```

@@ -1,0 +1,14 @@
+) Data from Table 5.8 and problem 8.24 in
+) Applied Mulivariate Statistical Analysis, 5th Edition
+) by Richard A. Johnson and Dean W. Wichern, Prentice Hall, 2002
+) These data were edited from file T5-8A.DAT on disk from book
+) Variables x1 - x5 are from Table 5.8 on p. 240 (data set T05_08);
+) x6 is from problem 8.24 on p. 475
+) Six types of overtime hours for the Madison, WI, Police Dept.
+) Col. 1: x1 = legal appearances hours
+) Col. 2: x2 = extrordinary even hours
+) Col. 3: x3 = holdover hours
+) Col. 4: x4 = compensatory overtimne allowed hours
+) Col. 5: x5 = meeting hours
+) Col. 6: x6 = regular overtime hours
+) Each case represents 12 pay periods, about .5 year

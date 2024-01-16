@@ -1,0 +1,33 @@
+---
+title: Excercises of Season 9
+format: gfm
+---
+
+
+#### Ex. iv. 
+
+9.4. Given $\rho$ and $\psi$ in Exercise 9.1 and an m = 1 factor model, calculate the reduced
+correlation matrix $\tilde{\rho} = \rho - \psi$ and the principal factor solution for the loading matrix L.
+Is the result consistent with the information in Exercise 9.1? Should it be?
+
+###### Soloution
+
+```{r}
+#| warning: false
+
+
+rho <- matrix(c(1, 0.63, 0.45, 0.63, 1, 
+                .35, .45, .35, 1), 3, 3, byrow = T)
+rho
+psi <- diag(c(0.19, 0.51, 0.75), 3)
+psi
+L <- matrix(c(0.9, 0.7, 0.5), 3, 1)
+ll <- L %*% t(L)
+
+le <- eigen(rho)$values
+ve <- eigen(rho)$vectors
+ress <- rho - psi
+
+all(ress - ll < 1e-10)
+
+```
