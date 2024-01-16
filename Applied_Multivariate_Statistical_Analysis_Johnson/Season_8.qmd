@@ -337,5 +337,13 @@ Identify any outliers in this data set.
 ```{r}
 #| 
 
+data(pulpfiber, package="robustbase")
 
+datt <- pulpfiber
+datt |> dim()
+datt |> head()
+
+colMeans(datt)
+
+write.csv(datt, "table_7_7.csv")
 ```
