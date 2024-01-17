@@ -1,6 +1,6 @@
 ---
 title: Excercises of Season 9
-format: docx
+format: gfm
 ---
 
 
