@@ -329,6 +329,293 @@ round(mat_cor, 4)
 
 ------------------------------------------------------------------------
 
+#### EX. xvi.
+
+Over a period of five years in the 1990s, yearly samples of fishermen on
+28 lakes in Wisconsin were asked to report the time they spent fishing
+and how many of each type of game fish they caught. Their responses were
+then converted to a catch rate per hour for x1 = Bluegill x2 = Black
+crappie, x3 = Smallmouth bass x4 = Largemouth bass, x5 = Walleye x6 =
+Northern pike The estimated correlation matrix (courtesy of Jodi Barnet)
+
+$$
+R = \begin{bmatrix}
+1 & 0.4919 & 0.2636 & 0.4653 & -0.2277 & 0.0652 \\
+0.4919 & 1 & 0.3127 & 0.3506 & -0.1917 & 0.2045 \\
+0.2635 & 0.3127 & 1 & 0.4108 & -0.0647 & 0.2493 \\
+0.4653 & 0.3506 & 0.4108 & 1 & -0.2249 & 0.2293 \\
+-0.2277 & -0.1917 & -0.0647 & -0.2249 & 1 & -0.2144 \\
+0.0652 & 0.2045 & 0.2493 & 0.2293 & -0.2144 & 1 \\
+\end{bmatrix}
+$$
+
+is based on a sample of about 120. (There were a few missing values)
+Fish caught by the same fisherman live alongside of each other, so the
+data should provide some evidence on how the fish group. The first four
+fish belong to the centrar- chids, the most plentiful family. The
+walleye is the most popular fish to eat.
+
+1)  Comment on the pattern of correlation within the centrarchid family
+    x1 through x4. Does the walleye appear to group with the other fish?
+
+2)  Perform a principal component analysis using only x1 through x4.
+    Interpret your results.
+
+3)  Perform a principal component analysis using all six variables.
+    Interpret your results.
+
+##### Soloution
+
+(a): Considering that the correlation of the fifth variable with the
+first, second and fourth variables is negative and insignificant with
+the third variable, the fifth variable cannot be considered the same
+group as the first to fourth variables.
+
+(b):
+
+``` r
+corr <- c(1, 0.491, 0.2636, 0.4653, -.2277, 0.0652, 
+0.4919, 1, 0.3127, 0.3506, -.1917, 0.2045, 
+0.2635, 0.3127, 1, 0.4108, -.0647, 0.2493, 
+0.4653, 0.3506, 0.4108, 1, -.2249, 0.2293, 
+-.2277, -.1917, -.0647, -.2249, 1, -.2144, 
+0.0652, 0.2045, 0.2493, 0.2293, -.2144, 1)
+
+R <- matrix(corr, ncol = 6, nrow = 6, byrow = TRUE)
+R
+```
+
+            [,1]    [,2]    [,3]    [,4]    [,5]    [,6]
+    [1,]  1.0000  0.4910  0.2636  0.4653 -0.2277  0.0652
+    [2,]  0.4919  1.0000  0.3127  0.3506 -0.1917  0.2045
+    [3,]  0.2635  0.3127  1.0000  0.4108 -0.0647  0.2493
+    [4,]  0.4653  0.3506  0.4108  1.0000 -0.2249  0.2293
+    [5,] -0.2277 -0.1917 -0.0647 -0.2249  1.0000 -0.2144
+    [6,]  0.0652  0.2045  0.2493  0.2293 -0.2144  1.0000
+
+``` r
+model1 <- princomp(covmat = R[1:4, 1:4])
+print(model1)
+```
+
+    Call:
+    princomp(covmat = R[1:4, 1:4])
+
+    Standard deviations:
+    Comp.1 Comp.2 Comp.3 Comp.4 
+    1.4676 0.8875 0.7846 0.6655 
+
+     4  variables and  NA observations.
+
+``` r
+summary(model1)
+```
+
+    Importance of components:
+                           Comp.1 Comp.2 Comp.3 Comp.4
+    Standard deviation     1.4676 0.8875 0.7846 0.6655
+    Proportion of Variance 0.5385 0.1969 0.1539 0.1107
+    Cumulative Proportion  0.5385 0.7354 0.8893 1.0000
+
+``` r
+model1$loadings
+```
+
+
+    Loadings:
+         Comp.1 Comp.2 Comp.3 Comp.4
+    [1,]  0.527  0.457  0.249  0.672
+    [2,]  0.503  0.412 -0.614 -0.447
+    [3,]  0.443 -0.758 -0.368  0.306
+    [4,]  0.523 -0.215  0.652 -0.505
+
+                   Comp.1 Comp.2 Comp.3 Comp.4
+    SS loadings      1.00   1.00   1.00   1.00
+    Proportion Var   0.25   0.25   0.25   0.25
+    Cumulative Var   0.25   0.50   0.75   1.00
+
+3)  
+
+``` r
+model2 <- princomp(covmat = R)
+print(model2)
+```
+
+    Call:
+    princomp(covmat = R)
+
+    Standard deviations:
+    Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 
+    1.5436 1.0015 0.9698 0.8253 0.7531 0.6521 
+
+     6  variables and  NA observations.
+
+``` r
+summary(model2)
+```
+
+    Importance of components:
+                           Comp.1 Comp.2 Comp.3 Comp.4  Comp.5  Comp.6
+    Standard deviation     1.5436 1.0015 0.9698 0.8253 0.75309 0.65214
+    Proportion of Variance 0.3971 0.1672 0.1568 0.1135 0.09452 0.07088
+    Cumulative Proportion  0.3971 0.5643 0.7211 0.8346 0.92912 1.00000
+
+``` r
+model2$loadings
+```
+
+
+    Loadings:
+         Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6
+    [1,]  0.467  0.413  0.274         0.245  0.684
+    [2,]  0.464  0.217         0.660 -0.287 -0.462
+    [3,]  0.404        -0.587 -0.333 -0.584  0.200
+    [4,]  0.489               -0.473  0.533 -0.487
+    [5,] -0.284  0.466 -0.696  0.302  0.354       
+    [6,]  0.289 -0.745 -0.286  0.362  0.328  0.203
+
+                   Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6
+    SS loadings     1.000  1.000  1.000  1.000  1.000  1.000
+    Proportion Var  0.167  0.167  0.167  0.167  0.167  0.167
+    Cumulative Var  0.167  0.333  0.500  0.667  0.833  1.000
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+#### EX. XXiv
+
+8.24. Refer to Example 8.10 and the data in Table 5.8, page 240. Add the
+variable x6 = regular overtime hours whose values are (read across)
+
+6187 7336 6988 6964 8425 6778 5922 7307 7679 8259 10954 9353 6291 4969
+4825 6019 and redo Example 8.10.
+
+##### Soloution
+
+``` r
+options(digits = 5)
+
+
+dat <- read.table(file = "Johnson_Data/table_5_8.txt", 
+            header = FALSE) 
+names(dat) <- paste0("x", 1:6)
+head(dat)
+```
+
+        x1   x2   x3    x4   x5   x6
+    1 3387 2200 1181 14861  236 6187
+    2 3109  875 3532 11367  310 7336
+    3 2670  957 2502 13329 1182 6988
+    4 3125 1758 4510 12328 1208 6964
+    5 3469  868 3032 12847 1385 8425
+    6 3120  398 2130 13979 1053 6778
+
+``` r
+S <- cov(dat)
+S
+```
+
+           x1      x2       x3       x4      x5      x6
+    x1 367885  -72094    85715   222491  -44908  101313
+    x2 -72094 1399053    43400   139692  110517 1161018
+    x3  85715   43400  1458543 -1113810  330924 1079573
+    x4 222491  139692 -1113810  1698324 -244786 -462616
+    x5 -44908  110517   330924  -244786  224718  427768
+    x6 101313 1161018  1079573  -462616  427768 2488728
+
+``` r
+model <- princomp(dat, cor = FALSE,
+            score = TRUE)
+model
+```
+
+    Call:
+    princomp(x = dat, cor = FALSE, scores = TRUE)
+
+    Standard deviations:
+     Comp.1  Comp.2  Comp.3  Comp.4  Comp.5  Comp.6 
+    1947.58 1457.23  844.98  520.44  412.43  297.34 
+
+     6  variables and  16 observations.
+
+``` r
+summary(model)
+```
+
+    Importance of components:
+                               Comp.1     Comp.2     Comp.3    Comp.4     Comp.5
+    Standard deviation     1947.57586 1457.22732 844.980804 520.44389 412.428378
+    Proportion of Variance    0.52976    0.29658   0.099721   0.03783   0.023757
+    Cumulative Proportion     0.52976    0.82634   0.926065   0.96390   0.987652
+                               Comp.6
+    Standard deviation     297.335907
+    Proportion of Variance   0.012348
+    Cumulative Proportion    1.000000
+
+``` r
+model$loadings[]
+```
+
+            Comp.1    Comp.2    Comp.3    Comp.4   Comp.5    Comp.6
+    x1  0.00079009  0.056664  0.515720  0.612205  0.43107  0.412564
+    x2  0.30915059  0.554115 -0.561521  0.493228 -0.17958  0.080956
+    x3  0.48205390 -0.386202  0.327049  0.340437 -0.56964 -0.266698
+    x4 -0.36750110  0.641475  0.489822 -0.064203 -0.43081 -0.154295
+    x5  0.15441258 -0.035876  0.031598 -0.307143 -0.40619  0.845307
+    x6  0.71634421  0.357514  0.266161 -0.409360  0.32690 -0.117291
+
+``` r
+slambda <- model$sdev
+slambda
+```
+
+     Comp.1  Comp.2  Comp.3  Comp.4  Comp.5  Comp.6 
+    1947.58 1457.23  844.98  520.44  412.43  297.34 
+
+``` r
+lambda2 <- slambda^2
+Y <- model$scores
+head(Y)
+```
+
+           Comp.1   Comp.2  Comp.3   Comp.4    Comp.5   Comp.6
+    [1,] -1745.42  1479.26 -618.71  222.571    7.2309 -178.120
+    [2,]  1096.60 -2011.84 -652.46  -69.537  636.9219 -560.194
+    [3,]  -210.59  -490.61 -365.80 -899.839 -293.5232   15.226
+    [4,]  1360.05 -1448.11 -420.09  523.494 -972.2274  -88.499
+    [5,]  1255.88  -502.07  422.36 -893.807  359.9165  273.731
+    [6,]  -971.60  -284.69  316.91 -942.849  -83.5299   70.131
+
+``` r
+cc <- qchisq(0.95, df = 2)
+cc
+```
+
+    [1] 5.9915
+
+``` r
+l1 <- lambda2[1]; 
+l2 <- lambda2[2]
+fun1 <- function(x) sqrt(l2 * (cc - x^2/l1))
+fun2 <- function(x) - sqrt(l2 * (cc - x^2 / l1))
+
+dat2 <- data.frame(x = Y[, 1], y = Y[, 2])
+plot(y ~ x, data = dat2, pch = 16, col = "darkblue", 
+        xlim = c(-5000, 5000), 
+        ylim = c(-4000, 4000), asp = 2)
+    curve(fun1, -sqrt(cc * l1), sqrt(cc * l1), add = TRUE, 
+            lwd = 2, col = "red")
+    curve(fun2, -sqrt(cc * l1), sqrt(cc * l1), add = TRUE, 
+            lwd = 2, col = "red")
+```
+
+![](Season_8_files/figure-commonmark/unnamed-chunk-13-1.png)
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
 #### EX. xxv.
 
 8.25. Refer to the police overtime hours data in Example 8.10. Construct
@@ -358,10 +645,10 @@ summary(model)
 ```
 
     Importance of components:
-                           Comp.1 Comp.2 Comp.3  Comp.4  Comp.5  Comp.6
-    Standard deviation     1.6239 1.1871 1.0605 0.72384 0.43144 0.34452
-    Proportion of Variance 0.4395 0.2349 0.1875 0.08732 0.03102 0.01978
-    Cumulative Proportion  0.4395 0.6744 0.8619 0.94919 0.98022 1.00000
+                            Comp.1  Comp.2  Comp.3   Comp.4   Comp.5   Comp.6
+    Standard deviation     1.62395 1.18713 1.06054 0.723836 0.431443 0.344519
+    Proportion of Variance 0.43953 0.23488 0.18746 0.087323 0.031024 0.019782
+    Cumulative Proportion  0.43953 0.67441 0.86187 0.949194 0.980218 1.000000
 
 ``` r
 Y <- model$loadings[]
@@ -390,7 +677,7 @@ abline(h = UCL, lwd = 2, col = "red")
 text(x = 5, y = UCL + 0.2, label = "UCL Bond", cex = 2)
 ```
 
-![](Season_8_files/figure-commonmark/unnamed-chunk-11-1.png)
+![](Season_8_files/figure-commonmark/unnamed-chunk-14-1.png)
 
 ------------------------------------------------------------------------
 
@@ -473,13 +760,13 @@ plot(x = 1:n, y = la, type = "l", main = "Scree Plot",
         lwd = 2, col = "red")
 ```
 
-![](Season_8_files/figure-commonmark/unnamed-chunk-12-1.png)
+![](Season_8_files/figure-commonmark/unnamed-chunk-15-1.png)
 
 ``` r
 cumsum(la) / sum(la)
 ```
 
-    [1] 0.9876 0.9967 0.9995 1.0000
+    [1] 0.98762 0.99668 0.99947 1.00000
 
 <br>
 
@@ -495,8 +782,8 @@ Model
     princomp(x = datt, cor = TRUE, scores = TRUE)
 
     Standard deviations:
-    Comp.1 Comp.2 Comp.3 Comp.4 
-    1.9595 0.3746 0.1123 0.0871 
+      Comp.1   Comp.2   Comp.3   Comp.4 
+    1.959466 0.374572 0.112267 0.087099 
 
      4  variables and  62 observations.
 
@@ -505,20 +792,20 @@ summary(Model)
 ```
 
     Importance of components:
-                           Comp.1  Comp.2   Comp.3   Comp.4
-    Standard deviation     1.9595 0.37457 0.112267 0.087099
-    Proportion of Variance 0.9599 0.03508 0.003151 0.001897
-    Cumulative Proportion  0.9599 0.99495 0.998103 1.000000
+                            Comp.1   Comp.2   Comp.3    Comp.4
+    Standard deviation     1.95947 0.374572 0.112267 0.0870993
+    Proportion of Variance 0.95988 0.035076 0.003151 0.0018966
+    Cumulative Proportion  0.95988 0.994952 0.998103 1.0000000
 
 ``` r
 cor(datt)
 ```
 
-           Y1     Y2     Y3     Y4
-    Y1 1.0000 0.9138 0.9839 0.9876
-    Y2 0.9138 1.0000 0.9422 0.8747
-    Y3 0.9839 0.9422 1.0000 0.9745
-    Y4 0.9876 0.8747 0.9745 1.0000
+            Y1      Y2      Y3      Y4
+    Y1 1.00000 0.91383 0.98388 0.98756
+    Y2 0.91383 1.00000 0.94222 0.87467
+    Y3 0.98388 0.94222 1.00000 0.97451
+    Y4 0.98756 0.87467 0.97451 1.00000
 
 <br>
 
@@ -538,4 +825,4 @@ y2 <- Y[, 2]
 plot(x = y1, y = y2, cex = 3, col = "red", pch = 16)
 ```
 
-![](Season_8_files/figure-commonmark/unnamed-chunk-15-1.png)
+![](Season_8_files/figure-commonmark/unnamed-chunk-18-1.png)

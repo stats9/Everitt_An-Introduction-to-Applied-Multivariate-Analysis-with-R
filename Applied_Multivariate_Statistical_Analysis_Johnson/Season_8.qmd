@@ -258,6 +258,148 @@ round(mat_cor, 4)
 ***
 
 
+
+#### EX. xvi. 
+
+Over a period of five years in the 1990s, yearly samples of fishermen on 28 lakes in
+Wisconsin were asked to report the time they spent fishing and how many of each
+type of game fish they caught. Their responses were then converted to a catch rate per
+hour for
+x1 = Bluegill
+x2 = Black crappie,  x3 = Smallmouth bass
+x4 = Largemouth bass,  x5 = Walleye
+x6 = Northern pike
+The estimated correlation matrix (courtesy of Jodi Barnet)
+
+$$
+R = \begin{bmatrix}
+1 & 0.4919 & 0.2636 & 0.4653 & -0.2277 & 0.0652 \\
+0.4919 & 1 & 0.3127 & 0.3506 & -0.1917 & 0.2045 \\
+0.2635 & 0.3127 & 1 & 0.4108 & -0.0647 & 0.2493 \\
+0.4653 & 0.3506 & 0.4108 & 1 & -0.2249 & 0.2293 \\
+-0.2277 & -0.1917 & -0.0647 & -0.2249 & 1 & -0.2144 \\
+0.0652 & 0.2045 & 0.2493 & 0.2293 & -0.2144 & 1 \\
+\end{bmatrix}
+$$
+
+is based on a sample of about 120. (There were a few missing values)
+Fish caught by the same fisherman live alongside of each other, so the data should
+provide some evidence on how the fish group. The first four fish belong to the centrar-
+chids, the most plentiful family. The walleye is the most popular fish to eat.
+
+(a) Comment on the pattern of correlation within the centrarchid family x1 through x4.
+Does the walleye appear to group with the other fish?
+
+(b) Perform a principal component analysis using only x1 through x4. Interpret your
+results.
+
+(c) Perform a principal component analysis using all six variables. Interpret your results.
+
+
+##### Soloution 
+
+(a): Considering that the correlation of the fifth variable with the first, second and fourth variables is negative and insignificant with the third variable, the fifth variable cannot be considered the same group as the first to fourth variables.
+
+
+(b): 
+
+```{r}
+corr <- c(1, 0.491, 0.2636, 0.4653, -.2277, 0.0652, 
+0.4919, 1, 0.3127, 0.3506, -.1917, 0.2045, 
+0.2635, 0.3127, 1, 0.4108, -.0647, 0.2493, 
+0.4653, 0.3506, 0.4108, 1, -.2249, 0.2293, 
+-.2277, -.1917, -.0647, -.2249, 1, -.2144, 
+0.0652, 0.2045, 0.2493, 0.2293, -.2144, 1)
+
+R <- matrix(corr, ncol = 6, nrow = 6, byrow = TRUE)
+R
+
+model1 <- princomp(covmat = R[1:4, 1:4])
+print(model1)
+summary(model1)
+model1$loadings
+
+```
+
+
+
+(c) 
+
+
+```{r}
+model2 <- princomp(covmat = R)
+print(model2)
+summary(model2)
+model2$loadings
+```
+
+***
+***
+
+#### EX. XXiv 
+
+8.24. Refer to Example 8.10 and the data in Table 5.8, page 240. Add the variable x6 = regular
+overtime hours whose values are (read across)
+
+6187    7336    6988    6964    8425    6778    5922    7307
+7679    8259    10954   9353    6291    4969    4825    6019
+and redo Example 8.10.
+
+
+##### Soloution 
+
+
+
+```{r}
+#| warning: false
+#| fig-height: 9
+#| fig-width: 9
+
+options(digits = 5)
+
+
+dat <- read.table(file = "Johnson_Data/table_5_8.txt", 
+            header = FALSE) 
+names(dat) <- paste0("x", 1:6)
+head(dat)
+
+
+S <- cov(dat)
+S
+
+model <- princomp(dat, cor = FALSE,
+            score = TRUE)
+model
+summary(model)
+model$loadings[]
+slambda <- model$sdev
+slambda
+lambda2 <- slambda^2
+Y <- model$scores
+head(Y)
+cc <- qchisq(0.95, df = 2)
+cc
+l1 <- lambda2[1]; 
+l2 <- lambda2[2]
+fun1 <- function(x) sqrt(l2 * (cc - x^2/l1))
+fun2 <- function(x) - sqrt(l2 * (cc - x^2 / l1))
+
+dat2 <- data.frame(x = Y[, 1], y = Y[, 2])
+plot(y ~ x, data = dat2, pch = 16, col = "darkblue", 
+        xlim = c(-5000, 5000), 
+        ylim = c(-4000, 4000), asp = 2)
+    curve(fun1, -sqrt(cc * l1), sqrt(cc * l1), add = TRUE, 
+            lwd = 2, col = "red")
+    curve(fun2, -sqrt(cc * l1), sqrt(cc * l1), add = TRUE, 
+            lwd = 2, col = "red")
+    
+```
+
+
+***
+***
+
+
 #### EX. xxv. 
 
 8.25. Refer to the police overtime hours data in Example 8.10. Construct an alternate control
