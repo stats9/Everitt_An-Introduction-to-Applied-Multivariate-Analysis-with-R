@@ -43,25 +43,33 @@ all(ress - ll < 1e-10)
 ### EX. 9.6 
 
 
+
+
 $$
 \begin{aligned}
 & \text{Verify the following matrix identities}\\
     & a:\quad (I + L' \Psi^{-1} L)^{-1} L' \Psi^{-1} L = I - (I + L' \Psi^{-1} L)^{-1} \\
-    & \textit{Hint: Premultiply both sides by \( (I + L' \Psi^{-1}L) \).}\\
+    & \text{Hint: Premultiply both sides by \( (I + L' \Psi^{-1}L) \).}\\
     & ~ \\
     & b: \quad  (LL' +  \Psi)^{-1} =  \Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1} \\
-    & \textit{Hint: Postmultiply both sides by \( (LL' + \Psi)\) and use (a).} \\
+    & \text{Hint: Postmultiply both sides by \( (LL' + \Psi)\) and use (a).} \\
     & \\
     & c: \quad L'(LL' + \Psi)^{-1}= (I+L'\Psi^{-1}L)^{-1}L'\Psi^{-l} \\
-    & \textit{Hint: Postmultiply the result in (b) by \(L\), use (a),} \\
-    & \textit{and take the transpose, noting that.} \\
-     & (LL'+\psi)^{-l},\psi^{−l},~ \textit{and}~ (I+L'\psi^{−l}) ~~\textit{are symmetric matrices.}\\
+    & \text{Hint: Postmultiply the result in (b) by \(L\), use (a),} \\
+    & \text{and take the transpose, noting that.} \\
+     & (LL'+\psi)^{-l},\psi^{−l},~ \text{and}~ (I+L'\psi^{−l}) ~~\text{are symmetric matrices.}\\
 \end{aligned}
 $$
 
 
 
+
+
+
 #### Soloution 
+
+
+
 
 
 a: 
@@ -74,6 +82,9 @@ $$
 
 \end{aligned}
 $$
+
+
+
 
 
 
@@ -90,7 +101,15 @@ $$
 \end{aligned}
 $$
 
+
+
+
+
 Note: all these Muliplication steps are reversible
+
+
+
+
 
 
 c: 
@@ -105,8 +124,15 @@ $$
 \end{aligned}
 $$
 
+
+
+
+
 Result follows by taking the transpose of both sides of the
 final equality. 
+
+
+
 
 ***
 ***
