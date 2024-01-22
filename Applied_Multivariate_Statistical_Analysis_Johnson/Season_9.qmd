@@ -37,6 +37,80 @@ all(ress - ll < 1e-10)
 
 ***
 ***
+***
+
+
+### EX. 9.6 
+
+
+$$
+\begin{aligned}
+& \text{Verify the following matrix identities}\\
+    & a:\quad (I + L' \Psi^{-1} L)^{-1} L' \Psi^{-1} L = I - (I + L' \Psi^{-1} L)^{-1} \\
+    & \textit{Hint: Premultiply both sides by \( (I + L' \Psi^{-1}L) \).}\\
+    & ~ \\
+    & b: \quad  (LL' +  \Psi)^{-1} =  \Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1} \\
+    & \textit{Hint: Postmultiply both sides by \( (LL' + \Psi)\) and use (a).} \\
+    & \\
+    & c: \quad L'(LL' + \Psi)^{-1}= (I+L'\Psi^{-1}L)^{-1}L'\Psi^{-l} \\
+    & \textit{Hint: Postmultiply the result in (b) by \(L\), use (a),} \\
+    & \textit{and take the transpose, noting that.} \\
+     & (LL'+\psi)^{-l},\psi^{−l},~ \textit{and}~ (I+L'\psi^{−l}) ~~\textit{are symmetric matrices.}\\
+\end{aligned}
+$$
+
+
+
+#### Soloution 
+
+
+a: 
+
+$$
+\begin{aligned}
+& (I + L'\Psi^{-1}L) \times (I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}L = \\
+& L'\Psi^{-1} L, \quad (I + L'\Psi^{-1}L) \times (I - (I + L'\Psi^{-1}L)^{-1}) = \\
+& (I + L'\Psi^{-1}L) - I = L'\Psi^{-1}L
+
+\end{aligned}
+$$
+
+
+
+b: 
+
+$$
+\begin{aligned}
+& (LL' + \Psi)^{-1} \times (LL' + \Psi)   = I \implies \\
+& (\Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1})\times (LL' + \Psi) = \\ 
+& (\Psi^{-1} - \Psi^{-1}L(I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}) (LL'+ \Psi) = \\
+& \Psi^{-1}(LL' + \Psi) - \Psi^{-1} \underset{\text{Using part a}}{\underbrace{L(I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}}}(LL'+\Psi) \\
+& = \Psi^{-1}(LL'+\Psi) - \Psi^{-1}L(I - (I + L'\Psi^{-1}L)^{-1})L' \\
+& = \Psi^{-1}L(I + L'\Psi^{-1}L)^{-1}L' = I
+\end{aligned}
+$$
+
+Note: all these Muliplication steps are reversible
+
+
+c: 
+
+
+Muliplying the result in (b) by L we get 
+$$
+\begin{aligned}
+& (LL' + \Psi)^{-1} L = \Psi^{-1} L - \Psi^{-1}L\underset{\text{Use part a}}{\underbrace{(I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}}} = \\
+& = \Psi^{-1} L - \Psi^{-1} L(I - (I = L'\Psi^{-1}L)^{-1}) = \\
+& \Psi^{-1}L(I + L'\Psi^{-1}L)^{-1}
+\end{aligned}
+$$
+
+Result follows by taking the transpose of both sides of the
+final equality. 
+
+***
+***
+***
 
 
 ### EX. 9.8
