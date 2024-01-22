@@ -49,13 +49,13 @@ $$
 \begin{aligned}
 & \text{Verify the following matrix identities}\\
     & a:\quad (I + L' \Psi^{-1} L)^{-1} L' \Psi^{-1} L = I - (I + L' \Psi^{-1} L)^{-1} \\
-    & \text{Hint: Premultiply both sides by \( (I + L' \Psi^{-1}L) \).}\\
+    & \text{Hint: Premultiply both sides by (I + L' \Psi^{-1}L) .}\\
     & ~ \\
     & b: \quad  (LL' +  \Psi)^{-1} =  \Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1} \\
-    & \text{Hint: Postmultiply both sides by \( (LL' + \Psi)\) and use (a).} \\
+    & \text{Hint: Postmultiply both sides by} ~ (LL' + \Psi) ~\text{and use (a).} \\
     & \\
     & c: \quad L'(LL' + \Psi)^{-1}= (I+L'\Psi^{-1}L)^{-1}L'\Psi^{-l} \\
-    & \text{Hint: Postmultiply the result in (b) by \(L\), use (a),} \\
+    & \text{Hint: Postmultiply the result in (b) by L, use (a),} \\
     & \text{and take the transpose, noting that.} \\
      & (LL'+\psi)^{-l},\psi^{−l},~ \text{and}~ (I+L'\psi^{−l}) ~~\text{are symmetric matrices.}\\
 \end{aligned}
