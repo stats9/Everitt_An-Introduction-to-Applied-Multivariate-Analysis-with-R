@@ -56,16 +56,16 @@ all(ress - ll < 1e-10)
 $$
 \begin{aligned}
 & \text{Verify the following matrix identities}\\
-    & a:\quad (I + L' \Psi^{-1} L)^{-1} L' \Psi^{-1} L = I - (I + L' \Psi^{-1} L)^{-1} \\
-    & \text{Hint: Premultiply both sides by \( (I + L' \Psi^{-1}L) \).}\\
-    & ~ \\
-    & b: \quad  (LL' +  \Psi)^{-1} =  \Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1} \\
-    & \text{Hint: Postmultiply both sides by \( (LL' + \Psi)\) and use (a).} \\
-    & \\
-    & c: \quad L'(LL' + \Psi)^{-1}= (I+L'\Psi^{-1}L)^{-1}L'\Psi^{-l} \\
-    & \text{Hint: Postmultiply the result in (b) by \(L\), use (a),} \\
-    & \text{and take the transpose, noting that.} \\
-     & (LL'+\psi)^{-l},\psi^{−l},~ \text{and}~ (I+L'\psi^{−l}) ~~\text{are symmetric matrices.}\\
+& a:\quad (I + L' \Psi^{-1} L)^{-1} L' \Psi^{-1} L = I - (I + L' \Psi^{-1} L)^{-1} \\
+& \text{Hint: Premultiply both sides by} ~(I + L' \Psi^{-1}L).\\
+& b: \quad  (LL' +  \Psi)^{-1} =  \Psi^{-1} -  \Psi^{-1}(I +  L'\Psi^{-1}L)^{-1}L'\Psi^{-1} \\
+& \text{Hint: Postmultiply both sides by} ~ (LL' + \Psi) ~\text{and use (a)}. \\
+& c: \quad L'(LL' + \Psi)^{-1}= (I+L'\Psi^{-1}L)^{-1}L'\Psi^{-l} \\
+& \text{Hint: Postmultiply the result in (b) by L, use (a),} \\
+& \text{and take the transpose, noting that.} \\
+& (LL'+\psi)^{-l},\psi^{−l}, \\
+& \text{and} ~~ (I+L'\psi^{−l}) \\
+& \text{are symmetric matrices.}\\
 \end{aligned}
 $$
 
@@ -73,8 +73,13 @@ $$
 
 a:
 
-\$\$
-\$\$
+$$
+\begin{aligned}
+& (I + L'\Psi^{-1}L) \times (I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}L = \\
+& L'\Psi^{-1} L, \quad (I + L'\Psi^{-1}L) \times (I - (I + L'\Psi^{-1}L)^{-1}) = \\
+& (I + L'\Psi^{-1}L) - I = L'\Psi^{-1}L
+\end{aligned}
+$$
 
 b:
 
@@ -91,9 +96,11 @@ $$
 
 Note: all these Muliplication steps are reversible
 
-c:
+*c*:
 
-Muliplying the result in (b) by L we get $$
+Muliplying the result in (b) by L we get
+
+$$
 \begin{aligned}
 & (LL' + \Psi)^{-1} L = \Psi^{-1} L - \Psi^{-1}L\underset{\text{Use part a}}{\underbrace{(I + L'\Psi^{-1}L)^{-1}L'\Psi^{-1}}} = \\
 & = \Psi^{-1} L - \Psi^{-1} L(I - (I = L'\Psi^{-1}L)^{-1}) = \\
@@ -156,3 +163,15 @@ $$
 & \text{So} \quad \psi_3 = 1  - 1.575 = -0.575 < 0 \text{which is inadmissible as a variance.}
 \end{aligned}
 $$
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### EX 9.21.
+
+Perform a varimax rotation of both m = 2 solutions in Exercise 9.20.
+Interpret the re- sults. Are the principal component and maximum
+likelihood solutions consistent with each other?

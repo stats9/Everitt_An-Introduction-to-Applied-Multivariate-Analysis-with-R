@@ -1,0 +1,6 @@
+again the ff.rst factoi. is dominated by solar radiation and,. to
+som~ extent, ozone. The second' factor" might ba interpretad as a
+contrast bebieen wind and the pair of pollutants N02 and 03.
+Recall solar radiation and ozone have the larg~st sample variances.
+This will affect the estimated loadings obtained by the principal
+component method.'
