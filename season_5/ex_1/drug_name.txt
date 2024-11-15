@@ -1,0 +1,13 @@
+drug-store-medication
+cocaine
+heroin
+inhalants
+hallucinogenics
+tranquillizers
+amphetamine
+marijuana
+hashish
+cigarettes
+liquor
+beer
+wine

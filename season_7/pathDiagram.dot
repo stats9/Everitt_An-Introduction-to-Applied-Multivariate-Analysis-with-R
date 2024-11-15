@@ -1,0 +1,47 @@
+digraph "Mental_sem_model2" {
+  rankdir=LR;
+  size="8,8";
+  node [fontname="Helvetica" fontsize=14 fillcolor="transparent" shape=box style=filled];
+  edge [fontname="Helvetica" fontsize=10];
+  center=1;
+  "Fact_grade11" [shape=ellipse]
+  "Fact_grade8" [shape=ellipse]
+  "V1" [fillcolor="transparent"]
+  "S1" [fillcolor="transparent"]
+  "R1" [fillcolor="transparent"]
+  "N1" [fillcolor="transparent"]
+  "W1" [fillcolor="transparent"]
+  "V2" [fillcolor="transparent"]
+  "S2" [fillcolor="transparent"]
+  "R2" [fillcolor="transparent"]
+  "N2" [fillcolor="transparent"]
+  "W2" [fillcolor="transparent"]
+  "V1" -> "V1" [label="0.4" dir=both color=black penwidth=1.001];
+  "S1" -> "S1" [label="0.84" dir=both color=black penwidth=1.001];
+  "R1" -> "R1" [label="0.66" dir=both color=black penwidth=1.001];
+  "N1" -> "N1" [label="0.54" dir=both color=black penwidth=1.001];
+  "W1" -> "W1" [label="0.84" dir=both color=black penwidth=1.001];
+  "V2" -> "V2" [label="0.3" dir=both color=black penwidth=1.001];
+  "S2" -> "S2" [label="0.9" dir=both color=black penwidth=1.001];
+  "R2" -> "R2" [label="0.62" dir=both color=black penwidth=1.001];
+  "N2" -> "N2" [label="0.57" dir=both color=black penwidth=1.001];
+  "W2" -> "W2" [label="0.92" dir=both color=black penwidth=1.001];
+  "Fact_grade8" -> "V1" [label="0.77" color=black penwidth=1.001];
+  "Fact_grade8" -> "S1" [label="0.41" color=black penwidth=1.001];
+  "Fact_grade8" -> "R1" [label="0.58" color=black penwidth=1.001];
+  "Fact_grade8" -> "N1" [label="0.7" color=black penwidth=1.001];
+  "Fact_grade8" -> "W1" [label="0.4" color=black penwidth=1.001];
+  "Fact_grade11" -> "V2" [label="0.84" color=black penwidth=1.001];
+  "Fact_grade11" -> "S2" [label="0.31" color=black penwidth=1.001];
+  "Fact_grade11" -> "R2" [label="0.61" color=black penwidth=1.001];
+  "Fact_grade11" -> "N2" [label="0.66" color=black penwidth=1.001];
+  "Fact_grade11" -> "W2" [label="0.29" color=black penwidth=1.001];
+  "Fact_grade11" -> "Fact_grade11" [label="1" dir=both color=black penwidth=1.001];
+  "Fact_grade8" -> "Fact_grade8" [label="1" dir=both color=black penwidth=1.001];
+  "Fact_grade11" -> "Fact_grade8" [label="0.95" dir=both color=black penwidth=1.001];
+  "V1" -> "V2" [label="0.19" dir=both color=black penwidth=1.001];
+  "S1" -> "S2" [label="0.53" dir=both color=black penwidth=1.001];
+  "R1" -> "R2" [label="0.39" dir=both color=black penwidth=1.001];
+  "N1" -> "N2" [label="0.32" dir=both color=black penwidth=1.001];
+  "W1" -> "W2" [label="0.32" dir=both color=black penwidth=1.001];
+}
