@@ -189,6 +189,169 @@ $$
 
 
 
+***
+***
+***
+
+
+
+### EX 9.12. 
+
+```{r}
+dat = read.table('./Johnson_Data/table_9_12.txt', 
+    header = TRUE, row.names = NULL)
+
+names(dat) = c(
+    'SalesGrowth', 
+    'SalesProfitability', 
+    'NewAccountSales', 
+    'CreativityTest', 
+    'MechanicalReasoningTest', 
+    'AbstractReasoningTest', 
+    'MathematicsTest'
+)
+dat[, 1] <- as.numeric(dat[, 1])
+dim(dat)
+head(dat)
+
+```
+
+#### (a)
+
+```{r}
+any(is.na(dat))
+dat_scale <- sapply(dat, FUN = function(x) (x - mean(x))/sd(x))
+
+# install.packages('psych')
+library(psych)
+KMO(cor(dat_scale))
+cortest.bartlett(R = cor(dat_scale), n = 50)
+```
+
+
+```{r}
+FaModel1 <- factanal(dat_scale, factors = 2, 
+    method = "mle", rotation = 'none')
+FaModel2 <- factanal(dat_scale, factors = 3, 
+    method = 'mle', rotation = 'none')
+
+```
+
+```{r}
+FaModel1
+```
+
+
+```{r}
+
+FaModel2
+```
+
+
+#### (b) 
+
+```{r}
+FaModel_rotate_1 <- factanal(dat_scale, factors = 2, 
+    method = "mle", rotation = "varimax")
+FaModel_rotate_2 <- factanal(dat_scale, factors = 3, 
+    method = 'mle', rotation = 'varimax')
+```
+
+```{r}
+FaModel_rotate_1$loadings[]
+FaModel_rotate_2$loadings[]
+
+```
+
+
+#### (c)
+
+
+```{r}
+LModel1 <- FaModel_rotate_1$loadings[]
+LModel2 <- FaModel_rotate_2$loadings[]
+communalities1 <- rowSums(LModel1^2)
+communalities2 <- rowSums(LModel2^2)
+communalities1
+communalities2
+```
+
+
+```{r}
+specific_variances1 <- 1 - communalities1
+specific_variances2 <- 1 - communalities2
+specific_variances1
+specific_variances2
+
+```
+
+
+#### (d)
+
+```{r}
+n = 50
+p = 7
+m1 = 2
+m2 = 3
+(Psi1 <- diag(specific_variances1))
+(Psi2 <- diag(specific_variances2))
+(LL1 <- LModel1 %*% t(LModel1))
+(LL2 <- LModel2 %*% t(LModel2))
+(sig_estimate_1 <- Psi1 + LL1)
+(sig_estimate_2 <- Psi2 + LL2)
+
+(Sig_sample <- cov(dat_scale))
+
+(c1 <- (n - 1 - (2 * p + 4*m1 + 5)/6))
+(c2 <- (n - 1 - (2 * p + 4*m2 + 5)/6))
+
+(det_ratio1 <- det(sig_estimate_1)/det(Sig_sample))
+(det_ratio2 <- det(sig_estimate_2)/det(Sig_sample))
+
+(chiModel1 <- c1 * log(det_ratio1))
+(chiModel2 <- c2 * log(det_ratio2))
+
+(df1 <- ((p - m1)^2 -p -m1)/2)
+(df2 <- ((p - m2)^2 -p -m2)/2)
+
+
+ifelse(chiModel1 > qchisq(0.01, df = df1, lower.tail = FALSE), "H0 for Model 1 Rejected", "H0 for Model 1 Accepted")
+ifelse(chiModel2 > qchisq(0.01, df = df2, lower.tail = FALSE), "H0 for Model 2 Rejected", "H0 for Model 2 Accepted")
+```
+
+
+
+
+#### (e) 
+
+
+```{r}
+x <- c(110, 98, 105, 15, 18, 12, 35)
+
+(SD <- sapply(dat, function(x) sd(x)))
+(Means <- colMeans(dat))
+(zj <- (x - Means)/SD)
+
+# Weighted Least square
+fModel1 <- solve(t(LModel1) %*% solve(Psi1) %*% LModel1) %*% 
+    t(LModel1) %*% solve(Psi1) %*% zj
+fModel1
+
+fModel2 <- solve(t(LModel2) %*% solve(Psi2) %*% LModel2) %*% 
+    t(LModel2) %*% solve(Psi2) %*% zj
+fModel2
+
+
+```
+
+
+```{r}
+fModel1_reg <- t(LModel1) %*% solve(Sig_sample) %*% zj
+fModel2_reg <- t(LModel2) %*% solve(Sig_sample) %*% zj
+fModel1_reg
+fModel2_reg
+
+```
 
 ***
 ***

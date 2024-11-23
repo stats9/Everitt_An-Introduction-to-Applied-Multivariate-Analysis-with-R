@@ -1,0 +1,15 @@
+T09_12    50    7 format
+) Data from Table 9.12 p. 539 in
+) Applied Mulivariate Statistical Analysis, 5th Edition
+) by Richard A. Johnson and Dean W. Wichern, Prentice Hall, 2002
+) These data were edited from file T9-12.DAT on disk from book
+) Salespeople data
+) Col. 1: x1 = Index of sales growth
+) Col. 2: x2 = Index of sales profitability
+) Col. 3: x3 = Index of new-account sales
+) Col. 4: x4 = Score on creativity test
+) Col. 5: x5 = Score on mechanical reasoning test
+) Col. 6: x6 = Score on abstract reasoning test
+) Col. 7: x7 = Score on mathematics test
+)"%lf %lf %lf %lf %lf %lf %lf"
+(3f6.1,4f3.0)

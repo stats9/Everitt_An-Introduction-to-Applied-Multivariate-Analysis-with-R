@@ -43,20 +43,47 @@ principal components?
 
 ###### (a):
 
+
+```{r}
+# collate data
+
+x1 = c(2.91, 2.62, 1.72, 3.02, 2.22, 2.36, 1.97, 1.85, 2.01, 1.82, 1.8, 
+    4.25, 2.64, 3.17)
+x2 = c(2.27, 0.75, 1.11, .81, 2.5, 4.51, 1.03, 2.39, 5.52, 2.18, 2.83, 
+    0.84, 1.75, 1.91)
+x3 = c(2.265, 0.597, 1.237, 1.649, 2.312, 
+    3.641, 1.244, 2.618, 3.147, 1.606,  2.119, 0.798, 1.336, 2.763)
+x4 = c(14.2, 13.1, 12.7, 15.2, 14.7, 15.6, 
+    13.3, 17, 12.9, 12.2, 13, 13.8, 13.6, 14.9)
+x5 = c(5.935, 1.523, 2.599, 4.009, 4.687, 8.044, 2.766, 6.538, 6.451, 
+    3.314, 3.777, 1.53, 2.768, 6.585)
+x6 = 1:14
+
+dat = data.frame(Median_value_Home = x1, health_service = x2, 
+    Total_Occup = x3, Median_Age_School = x4, 
+    Papulation_Tot = x5, Region = x6
+    )
+
+write.table(dat, './Johnson_Data/Table_8_2.txt', row.names = FALSE)
+```
+
+
+
+
 ```{r}
 #| warning: false
 
-S <- matrix(c(3.397, -1.102, 4.306, -2.078, 0.027, 
-            -1.102, 9.673, -1.513, 10.953, 1.203, 
-            4.306, -1.513, 55.626, -28.937, -0.044, 
-            -2.078, 10.953, -28.937, 89.067, 0.957, 
-            0.027, 1.203, -0.044, 0.957, 0.319), 
-            byrow = T, nrow = 5, ncol = 5)
+dat2 = dat[, 5:1]
+(S <- cov(dat2))
 
 S[, 5] <- 10 * S[, 5]
 S[5, ] <- 10 * S[5, ]
 
+
 print(S)
+S2 = S
+dimnames(S2) = NULL
+print(S2)
 ```
 
 
@@ -71,8 +98,8 @@ E <- eigen(S)
 la <- E$values
 v <- E$vectors
 
-la
-v
+la[1:2]
+v[, 1:2]
 
 ```
 
@@ -94,6 +121,9 @@ $$
 
 ```{r}
 #| warning: false
+
+round((sum(la[1:2])/sum(la)) * 100, 2)
+
 
 
 cor_mat <- matrix(0, nrow = 2, ncol = 5)
@@ -256,6 +286,43 @@ round(mat_cor, 4)
 
 ***
 ***
+
+
+
+#### xv. 
+
+The four sample standard deviations related to the birth weights discussed in Example (6-8) are as follows:  
+
+\[
+\sqrt{s_{11}} = 32.9909, \quad \sqrt{s_{22}} = 33.5918, \quad \sqrt{s_{33}} = 36.5534, \quad \sqrt{s_{44}} = 37.3517
+\]
+
+Use these standard deviations and the correlations given in Example (8-6) to construct the sample covariance matrix \(S\). Perform a principal component analysis (PCA) using \(S\).
+
+
+```{r}
+# from Example 8-6
+xbar = c(39.88, 45.08, 48.11, 49.95)
+
+R = matrix(c(1, 0.7501, 0.6329, 0.6363, 
+    0.7501, 1, 0.6925, 0.7386, 0.6329, 0.6925, 1, 
+    0.6625, 0.6363, 0.7386, 0.6625, 1), 4, 4)
+R
+
+varr <- c(32.9909, 33.5918, 36.5534, 37.3517)
+
+(Lam <- diag(varr))
+(S <- Lam %*% R %*% Lam)
+
+E <- eigen(S)
+
+la <- E$values
+v <- E$vectors
+
+(cumsum(la)/sum(la))*100
+
+v
+```
 
 
 
